@@ -9,7 +9,7 @@ import design.cardia.ktxml.builder.element
 import design.cardia.ktxml.builder.text
 
 fun main() {
-    val xml = document {
+    val xml = document(XmlVersion.V1_1, XmlEncoding.UTF_8) {
         element("svg") {
             "width" { "200px" }
             "height" { "150px" }
@@ -28,7 +28,7 @@ fun main() {
         }
     }
 
-    println(xml.toXml(PrettyFormat(), XmlVersion.V1_1, XmlEncoding.UTF_8))
+    println(xml.toXml(PrettyFormat()))
     println()
-    println(xml.toXml(CompressedFormat(), XmlVersion.V1_1, XmlEncoding.UTF_8))
+    println(xml.toXml(CompressedFormat()))
 }

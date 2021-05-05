@@ -1,10 +1,10 @@
 package design.cardia.ktxml.builder
 
-fun document(lambda: Document.() -> Element) = Document(lambda)
+fun document(version: XmlVersion, encoding: XmlEncoding, lambda: Document.() -> Element) = Document(version, encoding, lambda)
 
 fun element(type: String, lambda: Element.() -> Unit) = Element(type).apply(lambda)
 
-fun Element.add(lambda: () -> XmlContent) {
+fun Element.add(lambda: () -> Node) {
     children.add(lambda())
 }
 

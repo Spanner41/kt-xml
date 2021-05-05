@@ -4,26 +4,9 @@ sealed class Node {
     abstract fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String
 }
 
-class Document(
-    private val child: Document.() -> Element
+abstract class NodeWithAttributes(
+    private val attributes: MutableMap<String, () -> Any> = mutableMapOf()
 ) : Node() {
-    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding) =
-        """<?xml version="${version.value}" encoding="${encoding.value}"?>${format.lineSeparator}${child().toXml(format, version, encoding)}"""
-}
-
-abstract class XmlContent : Node()
-
-open class Element(
-    val type: String,
-    private val attributes: MutableMap<String, () -> Any> = mutableMapOf(),
-    val children: MutableList<XmlContent> = mutableListOf()
-) : XmlContent() {
-    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding) = if (shouldCollapse(format)) {
-        "<$type${attributesToXml()} />"
-    } else {
-        "<$type${attributesToXml()}>${childrenToXml(format, version, encoding)}</$type>"
-    }
-
     operator fun String.invoke(value: () -> Any) {
         attributes[this] = value
     }
@@ -33,22 +16,21 @@ open class Element(
     }
 
     protected fun attributesToXml(): String =
-        attributes.mapNotNull { (k, v) -> "$k=\"${v.invoke()}\"" }.joinToString(prefix = " ", separator = " ")
+        attributes.mapNotNull { (k, v) -> "$k=\"${v.invoke()}\"" }
+            .joinToString(prefix = " ", separator = " ")
             .ifBlank { "" }
+}
 
-    protected fun childrenToXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String =
-        children.joinToString(
-            prefix = getChildSeparator(format),
-            postfix = getChildPostfix(format),
-            separator = getChildSeparator(format),
-            transform = { it.toXml(format.childFormat(), version, encoding) }
-        ).ifBlank { "" }
+open class Text(var text: String = "") : Node() {
+    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String = format.escape(text, version)
+}
 
-    private fun getChildSeparator(format: XmlFormat) =
-        format.lineSeparator + if (format is PrettyFormat) format.tabCharacter.repeat(format.tabLevel + 1) else ""
+class CdataNode(private val text: String) : Node() {
+    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String = "<![CDATA[${text.escape()}]]>"
 
-    private fun getChildPostfix(format: XmlFormat) =
-        format.lineSeparator + if (format is PrettyFormat) format.tabCharacter.repeat(format.tabLevel) else ""
+    private fun String.escape() = replace("]]>", "]]&gt;")
+}
 
-    private fun shouldCollapse(format: XmlFormat) = format.collapseEmptyTags && children.isEmpty()
+class CommentNode(private val text: String) : Node() {
+    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String = "<!-- $text -->"
 }

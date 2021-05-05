@@ -17,6 +17,8 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <apache.commons.lang3.version>3.12.0</apache.commons.lang3.version>
         <ktlint.version>0.38.1</ktlint.version>
+        <junit-jupiter.version>5.7.0</junit-jupiter.version>
+        <assertk.version>0.23.1</assertk.version>
     </properties>
 
     <dependencies>
@@ -25,10 +27,25 @@
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${apache.commons.lang3.version}</version>
+        </dependency>
+
+        <!-- TESTING -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.willowtreeapps.assertk</groupId>
+            <artifactId>assertk-jvm</artifactId>
+            <version>${assertk.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
