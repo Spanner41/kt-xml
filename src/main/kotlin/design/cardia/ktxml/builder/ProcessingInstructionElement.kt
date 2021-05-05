@@ -1,8 +1,8 @@
 package design.cardia.ktxml.builder
 
 class ProcessingInstructionElement(
-    type: String,
+    private val type: String,
     attributes: MutableMap<String, () -> Any> = mutableMapOf()
-) : Element(type, false, attributes) {
-    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String = "<?$type${attributesToXml()}?>"
+) : NodeWithAttributes(attributes) {
+    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String = "<?$type${attributesToXml(format, version)}?>"
 }

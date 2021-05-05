@@ -10,21 +10,14 @@ import design.cardia.ktxml.builder.text
 
 fun main() {
     val xml = document(XmlVersion.V1_1, XmlEncoding.UTF_8) {
-        element("svg") {
-            "width" { "200px" }
-            "height" { "150px" }
-            "viewbox" to "0 0 200 150"
+        element("project") {
+            "xmlns" to "http://maven.apache.org/POM/4.0.0"
+            "xmlns:xsi" to "http://www.w3.org/2001/XMLSchema-instance"
+            "xsi:schemaLocation" to "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 
-            element("defs") {
-                text("<Hello World>")
-            }
-            element("test") {
-                element("hi") {
-                    "hello" to "hi"
-                }
-                element("hi") {
-                }
-            }
+            element("modelVersion") { text("4.0.0") }
+
+            element("groupId") { text("design.cardia") }
         }
     }
 

@@ -7,23 +7,23 @@ open class Element(
     val children: MutableList<Node> = mutableListOf()
 ) : NodeWithAttributes(attributes) {
     override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding) = if (shouldCollapse(format)) {
-        "<$type${attributesToXml()} />"
+        "<$type${attributesToXml(format, version)} />"
     } else {
-        "<$type${attributesToXml()}>${childrenToXml(format, version, encoding)}</$type>"
+        "<$type${attributesToXml(format, version)}>${childrenToXml(format, version, encoding)}</$type>"
     }
 
-    protected fun childrenToXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String =
-        children.joinToString(
-            prefix = getChildSeparator(format),
-            postfix = getChildPostfix(format),
-            separator = getChildSeparator(format),
+    protected fun childrenToXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String {
+        val childFormat = format.childFormat()
+
+        return children.joinToString(
+            prefix = getSeparator(childFormat),
+            separator = getSeparator(childFormat),
+            postfix = getSeparator(format),
             transform = { it.toXml(format.childFormat(), version, encoding) }
         ).ifBlank { "" }
+    }
 
-    private fun getChildSeparator(format: XmlFormat) =
-        format.lineSeparator + if (format is PrettyFormat) format.tabCharacter.repeat(format.tabLevel + 1) else ""
-
-    private fun getChildPostfix(format: XmlFormat) =
+    private fun getSeparator(format: XmlFormat) =
         format.lineSeparator + if (format is PrettyFormat) format.tabCharacter.repeat(format.tabLevel) else ""
 
     private fun shouldCollapse(format: XmlFormat) = canCollapseWhenEmpty && format.collapseEmptyTags && children.isEmpty()
