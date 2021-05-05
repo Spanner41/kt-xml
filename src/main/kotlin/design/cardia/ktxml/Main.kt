@@ -23,7 +23,6 @@ fun main() {
                     "hello" to "hi"
                 }
                 element("hi") {
-
                 }
             }
         }
