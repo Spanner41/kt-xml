@@ -1,0 +1,10 @@
+# Generated files
+*.class
+target/
+
+# System files
+.DS_Store
+
+# Intellij files
+.idea/
+**/*.iml
