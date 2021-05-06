@@ -1,5 +1,9 @@
 package design.cardia.ktxml.builder
 
 open class Text(var text: String = "") : Node {
-    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding): String = format.escape(text, version)
+    override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding, indentLevel: Int): String =
+        getSeparator(format, indentLevel) + format.escape(text, version)
+
+    private fun getSeparator(format: XmlFormat, indentLevel: Int) =
+         if (format is PrettyFormat && format.textOnNewLine) format.lineSeparator + format.indentString.repeat(indentLevel) else ""
 }

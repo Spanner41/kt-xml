@@ -8,8 +8,6 @@ sealed class XmlFormat(
     val escapeFormat: EscapeFormat = EscapeFormat.DECIMAL,
     val lineSeparator: String
 ) {
-    abstract fun childFormat(): XmlFormat
-
     fun escape(text: String, xmlVersion: XmlVersion): String {
         return when (escapeFormat) {
             EscapeFormat.REFERENCE -> text.escapeUsingReferences()
@@ -37,25 +35,16 @@ sealed class XmlFormat(
 }
 
 class PrettyFormat(
-    val tabCharacter: String = "  ",
-    val tabLevel: Int = 0,
+    val indentString: String = "  ",
     collapseEmptyTags: Boolean = true,
+    val textOnNewLine: Boolean = false,
     escapeFormat: EscapeFormat = EscapeFormat.REFERENCE
-) : XmlFormat(collapseEmptyTags, escapeFormat, "\n") {
-    override fun childFormat() = PrettyFormat(
-        tabCharacter,
-        tabLevel + 1,
-        collapseEmptyTags,
-        escapeFormat
-    )
-}
+) : XmlFormat(collapseEmptyTags, escapeFormat, "\n")
 
 class CompressedFormat(
     collapseEmptyTags: Boolean = true,
     escapeFormat: EscapeFormat = EscapeFormat.DECIMAL
-) : XmlFormat(collapseEmptyTags, escapeFormat, "") {
-    override fun childFormat() = this
-}
+) : XmlFormat(collapseEmptyTags, escapeFormat, "")
 
 enum class EscapeFormat {
     DECIMAL, REFERENCE

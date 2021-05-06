@@ -6,5 +6,5 @@ class Document(
     private val child: Document.() -> Element
 ) {
     fun toXml(format: XmlFormat) =
-        """<?xml version="${version.value}" encoding="${encoding.value}"?>${format.lineSeparator}${child().toXml(format, version, encoding)}"""
+        """<?xml version="${version.value}" encoding="${encoding.value}"?>${child().toXml(format, version, encoding)}"""
 }

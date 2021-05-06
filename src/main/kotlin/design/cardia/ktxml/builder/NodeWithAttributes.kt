@@ -16,8 +16,6 @@ abstract class NodeWithAttributes(
     protected fun attributesToXml(xmlFormat: XmlFormat, xmlVersion: XmlVersion): String =
         attributes.mapNotNull { (key, value) ->
             val result = value.invoke().toString()
-            require(result.isValidValue()) { "$result is not a valid attribute value" }
-
             val escapedValue = xmlFormat.escape(result, xmlVersion)
 
             "$key=\"${escapedValue}\""
@@ -26,6 +24,4 @@ abstract class NodeWithAttributes(
             .ifBlank { "" }
 
     private fun String.isValidKey() = "^[a-zA-Z_][a-zA-Z0-9_.-]*(:[a-zA-Z0-9_.-]*)?\$".toRegex().matches(this)
-
-    private fun String.isValidValue() = "^[a-zA-Z0-9_.-]*\$".toRegex().matches(this)
 }

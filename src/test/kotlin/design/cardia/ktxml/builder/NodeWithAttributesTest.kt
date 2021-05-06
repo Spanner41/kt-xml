@@ -10,7 +10,7 @@ import java.math.BigDecimal
 
 internal class NodeWithAttributesTest {
     class DummyNode : NodeWithAttributes() {
-        override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding) = ""
+        override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding, indentLevel: Int) = ""
         fun attributes() = attributes
         fun valueOfAttributesToXml() = attributesToXml(PrettyFormat(), XmlVersion.V1_1)
     }
