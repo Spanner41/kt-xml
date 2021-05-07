@@ -14,7 +14,7 @@ import design.cardia.ktxml.builder.XmlVersion
 import java.lang.RuntimeException
 
 class XmlPrinter {
-    val elementPrinter = ElementPrinter()
+    val elementPrinter = ElementPrintHelper()
 
     fun print(document: Document, format: XmlFormat) =
         document.print(

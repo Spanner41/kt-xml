@@ -4,7 +4,7 @@ import design.cardia.ktxml.builder.Element
 import design.cardia.ktxml.builder.XmlFormat
 import design.cardia.ktxml.builder.XmlVersion
 
-class ElementPrinter {
+class ElementPrintHelper {
   fun openTag(node: Element, format: XmlFormat, version: XmlVersion) =
     "<${node.type}${node.attributesToXml(format, version)}>"
 
