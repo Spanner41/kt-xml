@@ -11,7 +11,4 @@ class Document(
         "version" to version.value
         "encoding" to encoding.value
     }
-
-    fun toXml(format: XmlFormat) =
-        """${xmlInstructionElement.toXml(format, version, encoding)}${child.toXml(format, version, encoding)}"""
 }

@@ -11,6 +11,7 @@ import design.cardia.ktxml.builder.Text
 import design.cardia.ktxml.builder.XmlEncoding
 import design.cardia.ktxml.builder.XmlFormat
 import design.cardia.ktxml.builder.XmlVersion
+import java.lang.RuntimeException
 
 class XmlPrinter {
     val elementPrinter = ElementPrinter()
@@ -39,7 +40,7 @@ class XmlPrinter {
             is ProcessingInstructionElement -> "<?$type${attributesToXml(format, version)}?>"
             is Comment -> "<!-- $text -->"
             is CdataNode -> "<![CDATA[${text.escapeCdata()}]]>"
-            else -> TODO("Implement handler for ${this::class.simpleName}")
+            else -> throw RuntimeException("Implement handler for ${this::class.simpleName}")
         }
 
     private fun Node.childrenToXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding, indentLevel: Int): String {
