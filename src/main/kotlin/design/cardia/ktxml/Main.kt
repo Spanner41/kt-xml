@@ -6,6 +6,7 @@ import design.cardia.ktxml.builder.XmlEncoding
 import design.cardia.ktxml.builder.XmlVersion
 import design.cardia.ktxml.builder.document
 import design.cardia.ktxml.builder.element
+import design.cardia.ktxml.printer.XmlPrinter
 
 fun main() {
     val xml = document(XmlVersion.V1_1, XmlEncoding.UTF_8) {
@@ -28,7 +29,15 @@ fun main() {
         }
     }
 
+    val printer = XmlPrinter()
+
+    println(printer.print(xml, PrettyFormat()))
+    println("---")
     println(xml.toXml(PrettyFormat()))
-    println()
+
+    println("\n\n-----\n\n")
+
+    println(printer.print(xml, CompressedFormat()))
+    println("---")
     println(xml.toXml(CompressedFormat()))
 }
