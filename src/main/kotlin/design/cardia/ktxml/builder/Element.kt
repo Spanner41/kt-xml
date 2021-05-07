@@ -1,8 +1,8 @@
 package design.cardia.ktxml.builder
 
 open class Element(
-    private val type: String,
-    private val canCollapseWhenEmpty: Boolean = true,
+    val type: String,
+    val canCollapseWhenEmpty: Boolean = true,
     attributes: MutableMap<String, () -> Any> = mutableMapOf(),
     private val children: MutableList<Node> = mutableListOf()
 ) : NodeWithAttributes(attributes) {
@@ -11,6 +11,8 @@ open class Element(
     } else {
         "${getSeparator(format, indentLevel)}<$type${attributesToXml(format, version)}>${childrenToXml(format, version, encoding, indentLevel + 1)}</$type>"
     }
+
+    override fun children() = children
 
     protected fun childrenToXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding, indentLevel: Int): String {
         if (children.size == 1 && children[0] is Text && format is PrettyFormat && !format.textOnNewLine) {

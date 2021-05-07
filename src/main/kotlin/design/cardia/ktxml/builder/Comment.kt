@@ -1,5 +1,5 @@
 package design.cardia.ktxml.builder
 
-class Comment(private val text: String) : Node {
+class Comment(val text: String) : NodeWithoutChildren {
     override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding, indentLevel: Int): String = "<!-- $text -->"
 }

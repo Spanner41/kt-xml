@@ -1,6 +1,6 @@
 package design.cardia.ktxml.builder
 
-open class Text(var text: String = "") : Node {
+open class Text(val text: String = "") : NodeWithoutChildren {
     override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding, indentLevel: Int): String =
         getSeparator(format, indentLevel) + format.escape(text, version)
 
