@@ -1,4 +1,6 @@
-package design.cardia.ktxml.builder
+package design.cardia.ktxml.model
+
+import design.cardia.ktxml.printer.XmlFormat
 
 abstract class NodeWithAttributes(
     val attributes: MutableMap<String, () -> Any> = mutableMapOf()

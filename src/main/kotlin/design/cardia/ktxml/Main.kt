@@ -1,14 +1,14 @@
 package design.cardia.ktxml
 
-import design.cardia.ktxml.builder.CompressedFormat
-import design.cardia.ktxml.builder.PrettyFormat
-import design.cardia.ktxml.builder.XmlEncoding
-import design.cardia.ktxml.builder.XmlVersion
+import design.cardia.ktxml.model.XmlEncoding
+import design.cardia.ktxml.model.XmlVersion
 import design.cardia.ktxml.builder.cdata
 import design.cardia.ktxml.builder.comment
 import design.cardia.ktxml.builder.document
 import design.cardia.ktxml.builder.element
 import design.cardia.ktxml.builder.processingInstruction
+import design.cardia.ktxml.printer.CompressedFormat
+import design.cardia.ktxml.printer.PrettyFormat
 import design.cardia.ktxml.printer.XmlPrinter
 
 fun main() {

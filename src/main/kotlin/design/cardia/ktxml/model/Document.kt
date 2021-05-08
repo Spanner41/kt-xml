@@ -1,4 +1,4 @@
-package design.cardia.ktxml.builder
+package design.cardia.ktxml.model
 
 class Document(
     val version: XmlVersion,

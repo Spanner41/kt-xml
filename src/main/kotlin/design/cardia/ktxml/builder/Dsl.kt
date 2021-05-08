@@ -1,8 +1,17 @@
 package design.cardia.ktxml.builder
 
+import design.cardia.ktxml.model.CdataNode
+import design.cardia.ktxml.model.Comment
+import design.cardia.ktxml.model.Document
+import design.cardia.ktxml.model.Element
+import design.cardia.ktxml.model.ProcessingInstructionElement
+import design.cardia.ktxml.model.Text
+import design.cardia.ktxml.model.XmlEncoding
+import design.cardia.ktxml.model.XmlVersion
+
 fun document(version: XmlVersion, encoding: XmlEncoding, lambda: Document.() -> Element) = Document(version, encoding, lambda)
 
-fun element(type: String, lambda: Element.() -> Unit = {}) = Element(type).apply(lambda)
+fun element(type: String, lambda: Element.() -> Unit = {}): Element = Element(type).apply(lambda)
 
 fun Element.element(type: String, lambda: Element.() -> Unit = {}) = Element(type).apply(lambda).also(::add)
 

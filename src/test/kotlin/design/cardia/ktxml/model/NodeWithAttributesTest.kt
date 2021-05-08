@@ -1,16 +1,16 @@
-package design.cardia.ktxml.builder
+package design.cardia.ktxml.model
 
 import assertk.assertThat
 import assertk.assertions.hasMessage
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFailure
 import assertk.assertions.isSuccess
+import design.cardia.ktxml.printer.PrettyFormat
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 
 internal class NodeWithAttributesTest {
     class DummyNode : NodeWithAttributes() {
-        override fun children() = emptyList<Node>()
         fun attributes() = attributes
         fun valueOfAttributesToXml() = attributesToXml(PrettyFormat(), XmlVersion.V1_1)
     }
