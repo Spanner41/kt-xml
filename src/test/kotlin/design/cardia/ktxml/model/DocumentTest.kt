@@ -10,8 +10,8 @@ internal class DocumentTest {
 
     @Test
     fun `has XML instruction element with version and encoding`() {
-        assertThat(subject.xmlInstructionElement.attributes["version"]?.let { it() }).isEqualTo(XmlVersion.V1_0.value)
-        assertThat(subject.xmlInstructionElement.attributes["encoding"]?.let { it() }).isEqualTo(XmlEncoding.UTF_8.value)
+        assertThat(subject.xmlInstructionElement["version"]).isEqualTo(XmlVersion.V1_0.value)
+        assertThat(subject.xmlInstructionElement["encoding"]).isEqualTo(XmlEncoding.UTF_8.value)
     }
 
     @Test

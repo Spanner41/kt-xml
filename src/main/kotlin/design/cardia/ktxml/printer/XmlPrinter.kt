@@ -10,18 +10,20 @@ import design.cardia.ktxml.model.Text
 import design.cardia.ktxml.model.XmlVersion
 import java.lang.RuntimeException
 
-class XmlPrinter {
+class XmlPrinter(private val elementPrinter: ElementPrinter = ElementPrinter()) {
     fun print(document: Document, format: XmlFormat) = with(document) {
-        val visitor = PrintVisitor(format, version)
+        val visitor = PrintVisitor(elementPrinter, format, version)
 
         visitor.print(xmlInstructionElement, 0) +
             format.lineSeparator +
             visitor.print(child, 0)
     }
 
-    private class PrintVisitor(val format: XmlFormat, val version: XmlVersion) {
-        private val elementPrinter = ElementPrintHelper()
-
+    private class PrintVisitor(
+        private val elementPrinter: ElementPrinter,
+        private val format: XmlFormat,
+        private val version: XmlVersion
+    ) {
         fun print(node: Node, indentLevel: Int): String =
             when (node) {
                 is Element -> elementPrinter.print(
@@ -33,15 +35,15 @@ class XmlPrinter {
                     visitFunction(indentLevel + 1)
                 )
                 is Text -> format.escape(node.text, version)
-                is ProcessingInstructionElement -> "<?$node.type${node.attributesToXml(format, version)} ?>"
-                is Comment -> "<!-- $node.text -->"
+                is ProcessingInstructionElement -> "<?${node.type}${node.attributesToXml(format, version)} ?>"
+                is Comment -> "<!-- ${node.text} -->"
                 is CdataNode -> "<![CDATA[${node.text.escapeCdata()}]]>"
                 else -> throw RuntimeException("Implement handler for ${node::class.simpleName}")
             }
 
         private fun visitFunction(indentLevel: Int): Node.() -> String = { print(this, indentLevel) }
 
-        fun Node.newline(format: XmlFormat, indentLevel: Int) =
+        private fun Node.newline(format: XmlFormat, indentLevel: Int) =
             if (format is PrettyFormat && ((this is Text && format.textOnNewLine) || this !is Text)) {
                 format.lineSeparator + format.indentString.repeat(indentLevel)
             } else {

@@ -15,6 +15,8 @@ abstract class NodeWithAttributes(
         attributes[this] = { other }
     }
 
+    operator fun get(key: String) = attributes[key]?.let { it() }
+
     fun attributesToXml(xmlFormat: XmlFormat, xmlVersion: XmlVersion): String =
         attributes.mapNotNull { (key, value) ->
             val result = value.invoke().toString()

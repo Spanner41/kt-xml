@@ -5,7 +5,7 @@ import design.cardia.ktxml.model.Node
 import design.cardia.ktxml.model.Text
 import design.cardia.ktxml.model.XmlVersion
 
-class ElementPrintHelper {
+class ElementPrinter {
     fun print(
         node: Element,
         format: XmlFormat,
@@ -31,7 +31,7 @@ class ElementPrintHelper {
         "<${type}${attributesToXml(format, version)}>"
 
     private fun Element.closeTag() =
-        "</${type}>"
+        "</$type>"
 
     private fun Element.selfClosingTag(format: XmlFormat, version: XmlVersion) =
         "<${type}${attributesToXml(format, version)} />"
@@ -39,13 +39,17 @@ class ElementPrintHelper {
     private fun Element.shouldCollapse(format: XmlFormat) =
         canCollapseWhenEmpty && format.collapseEmptyTags && children.isEmpty()
 
+    // Should this be part of the XML printer?
     private fun Element.childrenToXml(
         format: XmlFormat,
         separator: String,
         postfix: String,
         print: Node.() -> String
-    ) = if (children.size == 1 && children[0] is Text && format is PrettyFormat && !format.textOnNewLine) {
-            children[0].print()
+    ) = if (format is PrettyFormat && !format.textOnNewLine && children.filterIsInstance<Text>().isNotEmpty()) {
+        children.joinToString(
+            separator = "",
+            transform = print
+        ).ifBlank { "" }
     } else {
         children.joinToString(
             separator = separator,
