@@ -1,16 +1,17 @@
-package design.cardia.ktxml.builder
+package design.cardia.ktxml.model
 
 import assertk.assertThat
 import assertk.assertions.hasMessage
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFailure
+import assertk.assertions.isNull
 import assertk.assertions.isSuccess
+import design.cardia.ktxml.printer.PrettyFormat
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 
 internal class NodeWithAttributesTest {
     class DummyNode : NodeWithAttributes() {
-        override fun toXml(format: XmlFormat, version: XmlVersion, encoding: XmlEncoding, indentLevel: Int) = ""
         fun attributes() = attributes
         fun valueOfAttributesToXml() = attributesToXml(PrettyFormat(), XmlVersion.V1_1)
     }
@@ -33,6 +34,22 @@ internal class NodeWithAttributesTest {
             val result = attributes()["test"]?.invoke()
             assertThat(result).isEqualTo(1)
         }
+    }
+
+    @Test
+    fun `returns an attribute by key`() {
+        val node = DummyNode().apply {
+            "test" to 1
+        }
+
+        assertThat(node["test"]).isEqualTo(1)
+    }
+
+    @Test
+    fun `returns null if invalid attribute is requested`() {
+        val node = DummyNode()
+
+        assertThat(node["test"]).isNull()
     }
 
     @Test

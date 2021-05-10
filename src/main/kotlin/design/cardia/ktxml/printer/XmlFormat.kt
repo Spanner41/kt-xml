@@ -1,5 +1,6 @@
-package design.cardia.ktxml.builder
+package design.cardia.ktxml.printer
 
+import design.cardia.ktxml.model.XmlVersion
 import org.apache.commons.lang3.StringEscapeUtils.escapeXml10
 import org.apache.commons.lang3.StringEscapeUtils.escapeXml11
 

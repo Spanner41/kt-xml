@@ -1,4 +1,4 @@
-package design.cardia.ktxml.builder
+package design.cardia.ktxml.model
 
 enum class XmlVersion(val value: String) {
     V1_0("1.0"),

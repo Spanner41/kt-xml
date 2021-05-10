@@ -1,7 +1,9 @@
-package design.cardia.ktxml.builder
+package design.cardia.ktxml.model
+
+import design.cardia.ktxml.printer.XmlFormat
 
 abstract class NodeWithAttributes(
-    protected val attributes: MutableMap<String, () -> Any> = mutableMapOf()
+    val attributes: MutableMap<String, () -> Any> = mutableMapOf()
 ) : Node {
     operator fun String.invoke(value: () -> Any) {
         require(this.isValidKey()) { "$this is not a valid attribute key" }
@@ -13,7 +15,9 @@ abstract class NodeWithAttributes(
         attributes[this] = { other }
     }
 
-    protected fun attributesToXml(xmlFormat: XmlFormat, xmlVersion: XmlVersion): String =
+    operator fun get(key: String) = attributes[key]?.let { it() }
+
+    fun attributesToXml(xmlFormat: XmlFormat, xmlVersion: XmlVersion): String =
         attributes.mapNotNull { (key, value) ->
             val result = value.invoke().toString()
             val escapedValue = xmlFormat.escape(result, xmlVersion)
