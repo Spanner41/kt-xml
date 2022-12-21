@@ -19,7 +19,7 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <apache.commons.lang3.version>3.12.0</apache.commons.lang3.version>
         <ktlint.version>0.41.0</ktlint.version>
-        <junit-jupiter.version>5.7.2</junit-jupiter.version>
+        <junit-jupiter.version>5.9.1</junit-jupiter.version>
         <assertk.version>0.25</assertk.version>
     </properties>
 
