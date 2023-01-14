@@ -57,7 +57,7 @@ internal class ElementPrinterTest {
             text("hi")
             element("second")
         }
-        val format = PrettyFormat(textOnNewLine = false)
+        val format = PrettyFormat(putTextOnNewLine = false)
         var callCount = 0
 
         val result = subject.print(element, format, version, "\n  ", "\n") {
@@ -76,7 +76,7 @@ internal class ElementPrinterTest {
             text("hi")
             element("second")
         }
-        val format = PrettyFormat(textOnNewLine = true)
+        val format = PrettyFormat(putTextOnNewLine = true)
         var callCount = 0
 
         val result = subject.print(element, format, version, "\n  ", "\n") {

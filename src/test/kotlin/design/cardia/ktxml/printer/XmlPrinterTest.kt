@@ -42,7 +42,7 @@ internal class XmlPrinterTest {
     @Test
     fun `prints text element on new line`() {
         val document = document(Text("hi"))
-        val format = PrettyFormat(textOnNewLine = true)
+        val format = PrettyFormat(putTextOnNewLine = true)
 
         val result = subject.print(document, format)
 

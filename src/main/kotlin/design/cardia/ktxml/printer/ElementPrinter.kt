@@ -45,7 +45,7 @@ class ElementPrinter {
         separator: String,
         postfix: String,
         print: Node.() -> String
-    ) = if (format is PrettyFormat && !format.textOnNewLine && children.filterIsInstance<Text>().isNotEmpty()) {
+    ) = if (!format.putTextOnNewLine && children.filterIsInstance<Text>().isNotEmpty()) {
         children.joinToString(
             separator = "",
             transform = print

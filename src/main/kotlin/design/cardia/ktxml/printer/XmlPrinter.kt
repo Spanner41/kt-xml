@@ -44,7 +44,7 @@ class XmlPrinter(private val elementPrinter: ElementPrinter = ElementPrinter()) 
         private fun visitFunction(indentLevel: Int): Node.() -> String = { print(this, indentLevel) }
 
         private fun Node.newline(format: XmlFormat, indentLevel: Int) =
-            if (format is PrettyFormat && ((this is Text && format.textOnNewLine) || this !is Text)) {
+            if (this !is Text || format.putTextOnNewLine) {
                 format.lineSeparator + format.indentString.repeat(indentLevel)
             } else {
                 ""
