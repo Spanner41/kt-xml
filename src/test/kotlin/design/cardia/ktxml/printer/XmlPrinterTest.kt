@@ -65,7 +65,7 @@ internal class XmlPrinterTest {
             |<test>
             |  <?hi hello="world" ?>
             |</test>
-            """.trimMargin()
+            """.trimMargin(),
         )
     }
 
@@ -83,7 +83,7 @@ internal class XmlPrinterTest {
             |<test>
             |  <!-- hello -->
             |</test>
-            """.trimMargin()
+            """.trimMargin(),
         )
     }
 
@@ -101,7 +101,7 @@ internal class XmlPrinterTest {
             |<test>
             |  <![CDATA[<br>hello]]>
             |</test>
-            """.trimMargin()
+            """.trimMargin(),
         )
     }
 
@@ -119,7 +119,7 @@ internal class XmlPrinterTest {
             |<test>
             |  <![CDATA[<br>hello]]&gt;]]>
             |</test>
-            """.trimMargin()
+            """.trimMargin(),
         )
     }
 

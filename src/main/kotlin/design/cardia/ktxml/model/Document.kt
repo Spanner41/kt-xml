@@ -3,7 +3,7 @@ package design.cardia.ktxml.model
 class Document(
     val version: XmlVersion,
     val encoding: XmlEncoding,
-    childBuilder: Document.() -> Element
+    childBuilder: Document.() -> Element,
 ) {
     val child = childBuilder()
 

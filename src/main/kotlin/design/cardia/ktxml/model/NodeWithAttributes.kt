@@ -3,7 +3,7 @@ package design.cardia.ktxml.model
 import design.cardia.ktxml.printer.XmlFormat
 
 abstract class NodeWithAttributes(
-    val attributes: MutableMap<String, () -> Any> = mutableMapOf()
+    val attributes: MutableMap<String, () -> Any> = mutableMapOf(),
 ) : Node {
     operator fun String.invoke(value: () -> Any) {
         require(this.isValidKey()) { "$this is not a valid attribute key" }
