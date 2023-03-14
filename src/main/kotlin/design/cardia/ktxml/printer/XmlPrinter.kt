@@ -22,7 +22,7 @@ class XmlPrinter(private val elementPrinter: ElementPrinter = ElementPrinter()) 
     private class PrintVisitor(
         private val elementPrinter: ElementPrinter,
         private val format: XmlFormat,
-        private val version: XmlVersion
+        private val version: XmlVersion,
     ) {
         fun print(node: Node, indentLevel: Int): String =
             when (node) {
@@ -32,7 +32,7 @@ class XmlPrinter(private val elementPrinter: ElementPrinter = ElementPrinter()) 
                     version,
                     node.newline(format, indentLevel + 1),
                     node.newline(format, indentLevel),
-                    visitFunction(indentLevel + 1)
+                    visitFunction(indentLevel + 1),
                 )
                 is Text -> format.escape(node.text, version)
                 is ProcessingInstructionElement -> "<?${node.type}${node.attributesToXml(format, version)} ?>"

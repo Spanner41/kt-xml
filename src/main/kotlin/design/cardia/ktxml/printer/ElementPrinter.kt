@@ -12,7 +12,7 @@ class ElementPrinter {
         version: XmlVersion,
         separator: String,
         postfix: String,
-        print: Node.() -> String
+        print: Node.() -> String,
     ) =
         if (node.shouldCollapse(format)) {
             node.selfClosingTag(format, version)
@@ -44,18 +44,18 @@ class ElementPrinter {
         format: XmlFormat,
         separator: String,
         postfix: String,
-        print: Node.() -> String
+        print: Node.() -> String,
     ) = if (format is PrettyFormat && !format.textOnNewLine && children.filterIsInstance<Text>().isNotEmpty()) {
         children.joinToString(
             separator = "",
-            transform = print
+            transform = print,
         ).ifBlank { "" }
     } else {
         children.joinToString(
             separator = separator,
             prefix = separator,
             postfix = postfix,
-            transform = print
+            transform = print,
         ).ifBlank { "" }
     }
 }
