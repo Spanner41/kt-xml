@@ -14,7 +14,7 @@
         <main.class>design.cardia.ktxml.Main.kt</main.class>
         <kotlin.version>1.7.22</kotlin.version>
         <java.version>11</java.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <apache.commons.lang3.version>3.12.0</apache.commons.lang3.version>
